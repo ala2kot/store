@@ -8,8 +8,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-
 public class Checkout {
 
     public static final String APPLE = "apple";
@@ -23,23 +21,28 @@ public class Checkout {
     }
 
     public BigDecimal totalCost(List<String> shoppingCart) {
-        return Optional.ofNullable(shoppingCart).orElse(new ArrayList<>()).stream()
-                .map(item -> mapItemToPrice(item)).reduce(new BigDecimal("0.00"), (a, b) -> a.add(b));
-    }
+        final Map<String, Long> itemGroupByType = Optional.ofNullable(shoppingCart).orElse(new ArrayList<>()).stream().map(item-> item.toLowerCase()).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-    private BigDecimal mapItemToPrice(String item) {
-        if (APPLE.equals(item.toLowerCase())) {
-            return applePrice;
+        BigDecimal toPay = new BigDecimal("0.00");
+        for (String item : itemGroupByType.keySet()) {
+             toPay = toPay.add(mapItemToPrice(item, itemGroupByType.get(item)));
         }
-        return orangePrice;
+        return toPay;
     }
 
-    int applyAppleNewOffer(int numberOfApples){
-        return numberOfApples%2 + (int)numberOfApples/2;
+    private BigDecimal mapItemToPrice(String item, long numberOfItems) {
+        if (APPLE.equals(item.toLowerCase())) {
+            return applePrice.multiply(new BigDecimal(applyAppleNewOffer(numberOfItems)));
+        }
+        return orangePrice.multiply(new BigDecimal(applyOrangeNewOffer(numberOfItems)));
     }
 
-    int applyOrangeNewOffer(int numberOfOranges){
-        return numberOfOranges%3 + ((int)numberOfOranges/3)*2;
+    long applyAppleNewOffer(long numberOfApples) {
+        return numberOfApples % 2 + (int) numberOfApples / 2;
+    }
+
+    long applyOrangeNewOffer(long numberOfOranges) {
+        return numberOfOranges % 3 + ((int) numberOfOranges / 3) * 2;
     }
 
 }

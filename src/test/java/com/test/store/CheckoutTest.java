@@ -37,27 +37,27 @@ public class CheckoutTest {
     }
 
     @Test
-    public void shouldHandleApples() {
+    public void shouldHandleApplesWithNewOffer() {
         //given
 
         //when
 
         //then
         assertThat(checkout.totalCost(listOf(APPLE, 1)), is(APPLE_PRICE));
-        assertThat(checkout.totalCost(listOf(APPLE, 10)), is(APPLE_PRICE.multiply(new BigDecimal(10))));
-        assertThat(checkout.totalCost(listOf(APPLE, 5)), is(APPLE_PRICE.multiply(new BigDecimal(5))));
+        assertThat(checkout.totalCost(listOf(APPLE, 10)), is(APPLE_PRICE.multiply(new BigDecimal(5))));
+        assertThat(checkout.totalCost(listOf(APPLE, 5)), is(APPLE_PRICE.multiply(new BigDecimal(3))));
     }
 
     @Test
-    public void shouldHandleOranges() {
+    public void shouldHandleOrangesWithNewOffer() {
         //given
 
         //when
 
         //then
         assertThat(checkout.totalCost(listOf(ORANGE, 1)), is(ORANGE_PRICE));
-        assertThat(checkout.totalCost(listOf(ORANGE, 10)), is(ORANGE_PRICE.multiply(new BigDecimal(10))));
-        assertThat(checkout.totalCost(listOf(ORANGE, 5)), is(ORANGE_PRICE.multiply(new BigDecimal(5))));
+        assertThat(checkout.totalCost(listOf(ORANGE, 10)), is(ORANGE_PRICE.multiply(new BigDecimal(7))));
+        assertThat(checkout.totalCost(listOf(ORANGE, 5)), is(ORANGE_PRICE.multiply(new BigDecimal(4))));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class CheckoutTest {
 
         //then
         assertThat(checkout.totalCost(Arrays.asList(APPLE, ORANGE)), is(APPLE_PRICE.add(ORANGE_PRICE)));
-        assertThat(checkout.totalCost(Arrays.asList(APPLE, APPLE, APPLE, ORANGE)), is((APPLE_PRICE.multiply(new BigDecimal(3))).add(ORANGE_PRICE)));
+        assertThat(checkout.totalCost(Arrays.asList(APPLE, APPLE, APPLE, ORANGE)), is((APPLE_PRICE.multiply(new BigDecimal(2))).add(ORANGE_PRICE)));
         assertThat(checkout.totalCost(Arrays.asList(ORANGE, APPLE, ORANGE)), is(ORANGE_PRICE.multiply(new BigDecimal(2)).add(APPLE_PRICE)));
     }
 
@@ -89,11 +89,11 @@ public class CheckoutTest {
         //when
 
         //then
-        assertThat(checkout.applyAppleNewOffer(1),is(1));
-        assertThat(checkout.applyAppleNewOffer(2),is(1));
-        assertThat(checkout.applyAppleNewOffer(3),is(2));
-        assertThat(checkout.applyAppleNewOffer(4),is(2));
-        assertThat(checkout.applyAppleNewOffer(5),is(3));
+        assertThat(checkout.applyAppleNewOffer(1l),is(1l));
+        assertThat(checkout.applyAppleNewOffer(2l),is(1l));
+        assertThat(checkout.applyAppleNewOffer(3l),is(2l));
+        assertThat(checkout.applyAppleNewOffer(4l),is(2l));
+        assertThat(checkout.applyAppleNewOffer(5l),is(3l));
     }
 
     @Test
@@ -103,12 +103,12 @@ public class CheckoutTest {
         //when
 
         //then
-        assertThat(checkout.applyOrangeNewOffer(1),is(1));
-        assertThat(checkout.applyOrangeNewOffer(2),is(2));
-        assertThat(checkout.applyOrangeNewOffer(3),is(2));
-        assertThat(checkout.applyOrangeNewOffer(4),is(3));
-        assertThat(checkout.applyOrangeNewOffer(5),is(4));
-        assertThat(checkout.applyOrangeNewOffer(6),is(4));
+        assertThat(checkout.applyOrangeNewOffer(1l),is(1l));
+        assertThat(checkout.applyOrangeNewOffer(2l),is(2l));
+        assertThat(checkout.applyOrangeNewOffer(3l),is(2l));
+        assertThat(checkout.applyOrangeNewOffer(4l),is(3l));
+        assertThat(checkout.applyOrangeNewOffer(5l),is(4l));
+        assertThat(checkout.applyOrangeNewOffer(6l),is(4l));
     }
 
     private List<String> listOf(String item, int numberOfApples) {
