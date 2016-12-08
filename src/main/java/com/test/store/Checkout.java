@@ -34,4 +34,12 @@ public class Checkout {
         return orangePrice;
     }
 
+    int applyAppleNewOffer(int numberOfApples){
+        return numberOfApples%2 + (int)numberOfApples/2;
+    }
+
+    int applyOrangeNewOffer(int numberOfOranges){
+        return numberOfOranges%3 + ((int)numberOfOranges/3)*2;
+    }
+
 }

@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,6 +80,35 @@ public class CheckoutTest {
 
         //then
         assertThat(checkout.totalCost(Arrays.asList(APPLE, ORANGE, "Apple", "oRange")), is(APPLE_PRICE.multiply(new BigDecimal(2)).add(ORANGE_PRICE.multiply(new BigDecimal(2)))));
+    }
+
+    @Test
+    public void shouldCalculateCorrectNumberOfApplesToPay() {
+        //given
+
+        //when
+
+        //then
+        assertThat(checkout.applyAppleNewOffer(1),is(1));
+        assertThat(checkout.applyAppleNewOffer(2),is(1));
+        assertThat(checkout.applyAppleNewOffer(3),is(2));
+        assertThat(checkout.applyAppleNewOffer(4),is(2));
+        assertThat(checkout.applyAppleNewOffer(5),is(3));
+    }
+
+    @Test
+    public void shouldCalculateCorrectNumberOfOrangesToPay() {
+        //given
+
+        //when
+
+        //then
+        assertThat(checkout.applyOrangeNewOffer(1),is(1));
+        assertThat(checkout.applyOrangeNewOffer(2),is(2));
+        assertThat(checkout.applyOrangeNewOffer(3),is(2));
+        assertThat(checkout.applyOrangeNewOffer(4),is(3));
+        assertThat(checkout.applyOrangeNewOffer(5),is(4));
+        assertThat(checkout.applyOrangeNewOffer(6),is(4));
     }
 
     private List<String> listOf(String item, int numberOfApples) {
